@@ -106,8 +106,6 @@ WSGI_APPLICATION = 'adv_project.wsgi.application'
 #     }
 # }
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
