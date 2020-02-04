@@ -14,8 +14,10 @@ django-cors-headers = "*"
 gunicorn = "*"
 django-heroku = "*"
 django-rest-api = "*"
+psycopg2 = "*"
 
 [dev-packages]
+flake8 = "*"
 autopep8 = "*"
 
 [requires]
