@@ -1,6 +1,0 @@
-{
-  "python.pythonPath": "/home/kyle/.local/share/virtualenvs/CS-Build-Week-1-Ajl7Jjjo/bin/python",
-  "python.linting.flake8Enabled": true,
-  "python.linting.pylintEnabled": false,
-  "python.linting.enabled": true
-}
