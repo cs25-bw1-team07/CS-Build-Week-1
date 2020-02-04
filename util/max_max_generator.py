@@ -1,6 +1,3 @@
-import random
-
-
 class World:
     def __init__(self):
         self.grid = None
@@ -8,7 +5,6 @@ class World:
         self.height = 0
     def generate_rooms(self, size_x, size_y, num_rooms):
         random.seed('9Lambda1Thunder1D0me9')
-        print("RUNNING")
         '''
         Fill up the grid, bottom to top, in a zig-zag pattern
         '''
@@ -21,14 +17,57 @@ class World:
         # Start from bottom center (0,8)
         x = 8
         y = -1  # (this will become 0 on the first step)
+        last_x=None
+        last_y=4
         room_count = 0
         # # Start generating rooms to the North
         direction = 1  # 1: North, 2: West, 3: East, 4:South
         # # While there are rooms to be created...
         previous_room = None
+        vertical=[1,4]
+        horizontal=[2,3]
+        def get_dirs(x,y):
+            retval=[]
+            if self.grid[y+1][x]==None:
+                if y < len(self.grid) - 1:
+                    retval.append(1)
+            if self.grid[y][x-1]==None:
+                if x > 0:
+                    retval.append(2)
+            if self.grid[y][x+1]==None:
+                if x < len(self.grid[0])-1:
+                    retval.append(3)
+            if self.grid[y-1][x]==None:
+                if y>0:
+                    retval.append(4)
+                return retval
         while room_count < num_rooms:
+            print("ROOM COUNT",room_count)
             # Calculate the direction of the room to be created
-            new_direction=random.randint(1, 4)
+            if room_count>0:
+                available_dir=get_dirs(x,y)
+                print("Avail",available_dir)
+                new_direction=random.randint(1, 4)
+                if available_dir==[]:
+                    break
+                else:
+                    while new_direction not in available_dir:
+                        if new_direction in horizontal:
+                            new_direction=tuple(horizontal)[new_direction==horizontal[0]]
+                        if new_direction in vertical:
+                            new_direction=tuple(horizontal)[new_direction==horizontal[0]]
+                # print("RAND",new_direction)
+                if direction in vertical and new_direction in vertical:
+                    pass
+                elif  direction in horizontal and new_direction in horizontal:
+                    pass
+                else:
+                    if direction in horizontal:
+                        last_x=new_direction
+                    else:
+                        last_y=new_direction
+                    direction=new_direction
+                # print("New",direction,last_x,last_y)
             if direction == 1 and y < size_y - 1:
                 room_direction = "n"
                 y += 1
@@ -42,7 +81,6 @@ class World:
                 room_direction = "s"
                 y -= 1
             else:
-                print("NO")
                 # Change direction
                 room_direction = "n"
                 y += 1
@@ -58,7 +96,7 @@ class World:
             previous_room = room
             # Update iteration variables
             room_count += 1
-            print("XY", x, y, room_count)
+            # print("XY", x, y, room_count)
     def print_rooms(self):
         '''
         Print the rooms in room_grid in ascii characters.
@@ -108,14 +146,3 @@ class World:
         str += "# " * ((3 + self.width * 5) // 2) + "\n"
         # Print string
         print(str)
-
-
-# w.grid[0][0].connect_rooms(w.grid[1][0],"n")
-num_rooms = 15
-width = 15
-height = 20
-w = World()
-w.generate_rooms(width, height, num_rooms)
-w.print_rooms()
-# print(
-#     f"\n\nWorld\n  height: {height}\n  width: {width},\n  num_rooms: {num_rooms}\n")
