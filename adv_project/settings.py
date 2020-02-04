@@ -25,7 +25,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", False) or config('DEBUG', cast=bool)
-
+print("CURRENT DEBUG VALUE:", DEBUG)
 ALLOWED_HOSTS = []
 
 
