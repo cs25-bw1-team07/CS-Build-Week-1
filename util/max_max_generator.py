@@ -12,15 +12,15 @@ class World:
         for i in range(len(self.grid)):
             self.grid[i] = [None] * size_x
         # Start from bottom center (0,8)
-        x = 6
+        x = self.width//2
         y = -1  # (this will become 0 on the first step)
         room_count = 0
-        direction = 0  # 1: North, 2: East, 3: South, 4:West
+        direction = 0  # 0: North, 1: East, 2: South, 3:West
         previous_room = None
         vertical=[0,2]
         horizontal=[1,3]
         room_list=[]
-        last_split=0
+        last_split=1
         #check what diretions are possible
         def get_dirs(x,y):
             retval=[]
@@ -35,20 +35,20 @@ class World:
             return retval
         # # While there are rooms to be created...
         while room_count < num_rooms:
-            # print("ROOM COUNT",room_count)
             # Calculate the direction of the room to be created
             if room_count>0:
                 available_dir=[]
                 available_dir=get_dirs(x,y)
                 #Find a new split point
                 while available_dir==[]:
-                    last_split+=1
                     previous_room=room_list[last_split]
-                    split_room=room_list[last_split]
-                    x=split_room.x
-                    y=split_room.y
+                    x=previous_room.x
+                    y=previous_room.y
                     available_dir=get_dirs(x,y)
-                    # print("Avail",available_dir)
+                    last_split+=1
+                    direction=-1
+                    print("SPLIT",previous_room,available_dir)
+                # print("RMLST",room_list)
                 # if available_dir==[]:
                 #     break
                 new_direction=random.randint(0, 3)
@@ -95,8 +95,9 @@ class World:
             # print("ROOM",previous_room,room,room_direction)
             if previous_room is not None:
                 previous_room.connect_rooms(room, room_direction)
-            previous_room = room
+            # print("WTF",previous_room,"ROOM",room,room_direction)
             room_list.append(room)
+            previous_room = room
             # Update iteration variables
             room_count += 1
             # print("XY", x, y, room_count)
@@ -149,3 +150,12 @@ class World:
         str += "# " * ((3 + self.width * 5) // 2) + "\n"
         # Print string
         print(str)
+
+#Create Script
+width = 25
+height = 25
+num_rooms = 500
+w = World()
+w.generate_rooms(width, height, num_rooms)
+w.print_rooms()
+# print(f"\n\nWorld\n  height: {height}\n  width: {width},\n  num_rooms: {num_rooms}\n")
