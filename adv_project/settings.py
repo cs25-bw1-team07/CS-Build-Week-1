@@ -89,22 +89,8 @@ WSGI_APPLICATION = 'adv_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-# NAME = config("DB_NAME")
-# USER = config("DB_NAME")
-# PASSWORD = config("DB_PASSWORD")
-# HOST = config("DB_HOST")
-# PORT = config("DB_PORT")
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': NAME,
-#         'USER': USER,
-#         'PASSWORD': PASSWORD,
-#         'HOST': HOST,
-#         'PORT': PORT,
-#     }
-# }
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 DATABASES = {
     'default': {
