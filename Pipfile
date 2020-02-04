@@ -15,6 +15,7 @@ gunicorn = "*"
 django-heroku = "*"
 django-rest-api = "*"
 psycopg2 = "*"
+dj-database-url = "*"
 
 [dev-packages]
 flake8 = "*"
