@@ -88,20 +88,27 @@ WSGI_APPLICATION = 'adv_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-NAME = config("DB_NAME")
-USER = config("DB_NAME")
-PASSWORD = config("DB_PASSWORD")
-HOST = config("DB_HOST")
-PORT = config("DB_PORT")
+# NAME = config("DB_NAME")
+# USER = config("DB_NAME")
+# PASSWORD = config("DB_PASSWORD")
+# HOST = config("DB_HOST")
+# PORT = config("DB_PORT")
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': NAME,
+#         'USER': USER,
+#         'PASSWORD': PASSWORD,
+#         'HOST': HOST,
+#         'PORT': PORT,
+#     }
+# }
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': NAME,
-        'USER': USER,
-        'PASSWORD': PASSWORD,
-        'HOST': HOST,
-        'PORT': PORT,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
