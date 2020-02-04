@@ -4,10 +4,7 @@ class World:
         self.width = 0
         self.height = 0
     def generate_rooms(self, size_x, size_y, num_rooms):
-        # random.seed('9Lambda1Thunder1D0me9!')
-        '''
-        Fill up the grid, bottom to top, in a zig-zag pattern
-        '''
+        random.seed('9Lambda1Thunder1D0me9!')
         # Initialize the grid
         self.grid = [None] * size_y
         self.width = size_x
@@ -15,15 +12,15 @@ class World:
         for i in range(len(self.grid)):
             self.grid[i] = [None] * size_x
         # Start from bottom center (0,8)
-        x = 8
+        x = 6
         y = -1  # (this will become 0 on the first step)
-        last_x=None
-        last_y=4
         room_count = 0
         direction = 0  # 1: North, 2: East, 3: South, 4:West
         previous_room = None
         vertical=[0,2]
         horizontal=[1,3]
+        room_list=[]
+        last_split=0
         #check what diretions are possible
         def get_dirs(x,y):
             retval=[]
@@ -41,35 +38,38 @@ class World:
             # print("ROOM COUNT",room_count)
             # Calculate the direction of the room to be created
             if room_count>0:
+                available_dir=[]
                 available_dir=get_dirs(x,y)
-                # print("Avail",available_dir)
+                #Find a new split point
+                while available_dir==[]:
+                    last_split+=1
+                    previous_room=room_list[last_split]
+                    split_room=room_list[last_split]
+                    x=split_room.x
+                    y=split_room.y
+                    available_dir=get_dirs(x,y)
+                    # print("Avail",available_dir)
+                # if available_dir==[]:
+                #     break
                 new_direction=random.randint(0, 3)
-                # print("New Dir",new_direction)
-                if available_dir==[]:
-                    break
-                else:
-                    while new_direction not in available_dir:
-                        if new_direction==0:
-                            new_direction=(new_direction+2)%4
-                        elif new_direction==1:
-                            new_direction=(new_direction+2)%4
-                        elif new_direction==2:
-                            new_direction=(new_direction+2)%4
-                        elif new_direction==3:
-                            new_direction=(new_direction+2)%4
-                        new_direction=random.randint(0, 3)
+                    # print("New Dir",new_direction)
+                while new_direction not in available_dir:
+                    if new_direction==0:
+                        new_direction=(new_direction+2)%4
+                    elif new_direction==1:
+                        new_direction=(new_direction+2)%4
+                    elif new_direction==2:
+                        new_direction=(new_direction+2)%4
+                    elif new_direction==3:
+                        new_direction=(new_direction+2)%4
+                    new_direction=random.randint(0, 3)
                 # print("RAND",new_direction)
                 if direction in vertical and new_direction in vertical:
                     pass
                 elif  direction in horizontal and new_direction in horizontal:
                     pass
                 else:
-                    if direction in horizontal:
-                        last_x=new_direction
-                    else:
-                        last_y=new_direction
                     direction=new_direction
-                # print("New",direction,last_x,last_y)
             if direction == 0 and y < size_y - 1:
                 room_direction = "n"
                 y += 1
@@ -96,6 +96,7 @@ class World:
             if previous_room is not None:
                 previous_room.connect_rooms(room, room_direction)
             previous_room = room
+            room_list.append(room)
             # Update iteration variables
             room_count += 1
             # print("XY", x, y, room_count)
