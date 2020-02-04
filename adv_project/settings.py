@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 from decouple import config
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -88,14 +89,20 @@ WSGI_APPLICATION = 'adv_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+NAME = os.getenv("DB_NAME") or config("DB_NAME")
+USER = os.getenv("DB_NAME") or config("DB_NAME")
+PASSWORD = os.getenv("DB_Password") or config("DB_PASSWORD")
+HOST = os.getenv("DB_HOST") or config("DB_HOST")
+PORT = os.getenv("DB_PORT") or config("DB_PORT")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config("DB_NAME"),
-        'USER': config("DB_NAME"),
-        'PASSWORD': config("DB_Password"),
-        'HOST': config("DB_HOST"),
-        'PORT': config("DB_PORT"),
+        'NAME': NAME,
+        'USER': USER,
+        'PASSWORD': PASSWORD,
+        'HOST': HOST,
+        'PORT': PORT,
     }
 }
 
