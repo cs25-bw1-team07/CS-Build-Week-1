@@ -13,6 +13,7 @@ class Room(models.Model):
     e_to = models.IntegerField(default=0)
     w_to = models.IntegerField(default=0)
     def connectRooms(self, destinationRoom, direction):
+        print("CONNECT")
         destinationRoomID = destinationRoom.id
         try:
             destinationRoom = Room.objects.get(id=destinationRoomID)
@@ -31,6 +32,18 @@ class Room(models.Model):
                 print("Invalid direction")
                 return
             self.save()
+            # reverse_dirs = {"n": "s", "s": "n", "e": "w", "w": "e"}
+            # reverse_dir = reverse_dirs[direction]
+            # if reverse_dir=="n":
+            #     destinationRoom.n_to=self.id
+            # elif reverse_dir == "s":
+            #     destinationRoom.s_to = self.id
+            # elif reverse_dir == "e":
+            #     destinationRoom.e_to = self.id
+            # elif reverse_dir == "w":
+            #     destinationRoom.w_to = self.id
+            # destinationRoom.save()
+
     def playerNames(self, currentPlayerID):
         return [p.user.username for p in Player.objects.filter(currentRoom=self.id) if p.id != int(currentPlayerID)]
     def playerUUIDs(self, currentPlayerID):

@@ -1,13 +1,11 @@
 from django.contrib.auth.models import User
-from adventure.models import Player
+from adventure.models import Player, Room
 
-# Room.objects.all().delete()
+Room.objects.all().delete()
 
-# print(w.grid)
 stack=[]
 x=len(w.grid[0])//2
 y=0
-# print("XY",x,y)
 stack.append((w.grid[y][x],None,None))
 while len(stack)>0:
   tup=stack.pop()
@@ -15,31 +13,33 @@ while len(stack)>0:
   prev=tup[1]
   prevrm=tup[2]
   # print("CURM",curm,prev)
-  # curm.save()
+  curm.save()
+  if prevrm==None:
+    first_room=curm
   if curm.n_to:
     if prev !='n':
       stack.append((curm.n_to,'s',curm))
     else:
-      print("Connect",curm.id,curm.n_to.id,'n')
-    # curm.connectRooms(curm.n_to,'n')
+      # print("Connect",curm.id,curm.n_to.id,'n')
+      curm.connectRooms(curm.n_to,'n')
   if curm.w_to:
     if prev !='w':
       stack.append((curm.w_to,'e',curm))
     else:
-      print("Connect",curm.id,curm.w_to.id,'w')
-    # curm.connectRooms(curm.w_to,'w')
+      # print("Connect",curm.id,curm.w_to.id,'w')
+      curm.connectRooms(curm.w_to,'w')
   if curm.e_to:
     if prev !='e':
       stack.append((curm.e_to,'w',curm))
     else:
-      print("Connect",curm.id,curm.e_to.id,'e')
-    # curm.connectRooms(curm.e_to,'e')
+      # print("Connect",curm.id,curm.e_to.id,'e')
+      curm.connectRooms(curm.e_to,'e')
   if curm.s_to:
     if prev !='s':
       stack.append((curm.s_to,'n',curm))
     else:
-      print("Connect",curm.id,curm.s_to.id,'s')
-    # curm.connectRooms(curm.s_to,'s')
+      # print("Connect",curm.id,curm.s_to.id,'s')
+      curm.connectRooms(curm.s_to,'s')
 w.print_rooms()
 
 
@@ -81,10 +81,10 @@ w.print_rooms()
 # r_narrow.connectRooms(r_treasure, "n")
 # r_treasure.connectRooms(r_narrow, "s")
 
-# players=Player.objects.all()
-# for p in players:
-#   p.currentRoom=r_outside.id
-#   p.save()
+players=Player.objects.all()
+for p in players:
+  p.currentRoom=first_room
+  p.save()
 
 
 
