@@ -1,4 +1,5 @@
 import random
+
 class Room:
     def __init__(self, id, name, description, x, y):
         self.id = id
@@ -34,6 +35,8 @@ class Room:
         Connect two rooms in the given n/s/e/w direction
         '''
         return getattr(self, f"{direction}_to")
+
+
 class World:
     def __init__(self):
         self.grid = None
@@ -83,7 +86,7 @@ class World:
                     available_dir=get_dirs(x,y)
                     last_split+=1
                     direction=-1
-                    print("SPLIT",previous_room,available_dir)
+                    # print("SPLIT",previous_room,available_dir)
                 # print("RMLST",room_list)
                 # if available_dir==[]:
                 #     break
@@ -188,10 +191,9 @@ class World:
         print(str)
 
 #Create Script
-width = 25
-height = 25
-num_rooms = 500
+width = 5
+height = 5
+num_rooms = 25
 w = World()
 w.generate_rooms(width, height, num_rooms)
 w.print_rooms()
-# print(f"\n\nWorld\n  height: {height}\n  width: {width},\n  num_rooms: {num_rooms}\n")

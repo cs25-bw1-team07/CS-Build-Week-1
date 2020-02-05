@@ -1,9 +1,49 @@
 from django.contrib.auth.models import User
 from adventure.models import Player
-from .mad_max_generator import World
-from .sample_generator import Room
 
 # Room.objects.all().delete()
+
+# print(w.grid)
+stack=[]
+x=len(w.grid[0])//2
+y=0
+# print("XY",x,y)
+stack.append((w.grid[y][x],None,None))
+while len(stack)>0:
+  tup=stack.pop()
+  curm=tup[0]
+  prev=tup[1]
+  prevrm=tup[2]
+  # print("CURM",curm,prev)
+  # curm.save()
+  if curm.n_to:
+    if prev !='n':
+      stack.append((curm.n_to,'s',curm))
+    else:
+      print("Connect",curm.id,curm.n_to.id,'n')
+    # curm.connectRooms(curm.n_to,'n')
+  if curm.w_to:
+    if prev !='w':
+      stack.append((curm.w_to,'e',curm))
+    else:
+      print("Connect",curm.id,curm.w_to.id,'w')
+    # curm.connectRooms(curm.w_to,'w')
+  if curm.e_to:
+    if prev !='e':
+      stack.append((curm.e_to,'w',curm))
+    else:
+      print("Connect",curm.id,curm.e_to.id,'e')
+    # curm.connectRooms(curm.e_to,'e')
+  if curm.s_to:
+    if prev !='s':
+      stack.append((curm.s_to,'n',curm))
+    else:
+      print("Connect",curm.id,curm.s_to.id,'s')
+    # curm.connectRooms(curm.s_to,'s')
+w.print_rooms()
+
+
+# w.grid[3][3].n_to
 
 # r_outside = Room(title="Outside Cave Eeentrance",
 #                  description="North of you, the cave mount beckons")
