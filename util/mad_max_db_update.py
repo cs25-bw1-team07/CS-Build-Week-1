@@ -13,73 +13,41 @@ while len(stack)>0:
   prev=tup[1]
   prevrm=tup[2]
   # print("CURM",curm,prev)
-  curm.save()
+  new_curm=Room(title=curm.name, description=f'{curm.description} No:{curm.id}')
+  new_curm.save()
   if prevrm==None:
     first_room=curm
   if curm.n_to:
     if prev !='n':
-      stack.append((curm.n_to,'s',curm))
+      stack.append((curm.n_to,'s',new_curm))
     else:
       # print("Connect",curm.id,curm.n_to.id,'n')
-      curm.connectRooms(curm.n_to,'n')
+      new_curm.connectRooms(prevrm,'n')
+      prevrm.connectRooms(new_curm,'s')
   if curm.w_to:
     if prev !='w':
-      stack.append((curm.w_to,'e',curm))
+      stack.append((curm.w_to,'e',new_curm))
     else:
       # print("Connect",curm.id,curm.w_to.id,'w')
-      curm.connectRooms(curm.w_to,'w')
+      new_curm.connectRooms(prevrm,'w')
+      prevrm.connectRooms(new_curm,'e')
   if curm.e_to:
     if prev !='e':
-      stack.append((curm.e_to,'w',curm))
+      stack.append((curm.e_to,'w',new_curm))
     else:
       # print("Connect",curm.id,curm.e_to.id,'e')
-      curm.connectRooms(curm.e_to,'e')
+      new_curm.connectRooms(prevrm,'e')
+      prevrm.connectRooms(new_curm,'w')
   if curm.s_to:
     if prev !='s':
-      stack.append((curm.s_to,'n',curm))
+      stack.append((curm.s_to,'n',new_curm))
     else:
       # print("Connect",curm.id,curm.s_to.id,'s')
-      curm.connectRooms(curm.s_to,'s')
+      new_curm.connectRooms(prevrm,'s')
+      prevrm.connectRooms(new_curm,'n')
+
+
 w.print_rooms()
-
-
-# w.grid[3][3].n_to
-
-# r_outside = Room(title="Outside Cave Eeentrance",
-#                  description="North of you, the cave mount beckons")
-
-# r_foyer = Room(title="Foyer", description="""Dim light filters in from the south. Dusty
-# passages run north and east.""")
-
-# r_overlook = Room(title="Grand Overlook", description="""A steep cliff appears before you, falling
-# into the darkness. Ahead to the north, a light flickers in
-# the distance, but there is no way across the chasm.""")
-
-# r_narrow = Room(title="Narrow Passage", description="""The narrow passage bends here from west
-# to north. The smell of gold permeates the air.""")
-
-# r_treasure = Room(title="Treasure Chamber", description="""You've found the long-lost treasure
-# chamber! Sadly, it has already been completely emptied by
-# earlier adventurers. The only exit is to the south.""")
-
-# r_outside.save()
-# r_foyer.save()
-# r_overlook.save()
-# r_narrow.save()
-# r_treasure.save()
-
-# Link rooms together
-# r_outside.connectRooms(r_foyer, "n")
-# r_foyer.connectRooms(r_outside, "s")
-
-# r_foyer.connectRooms(r_overlook, "n")
-# r_overlook.connectRooms(r_foyer, "s")
-
-# r_foyer.connectRooms(r_narrow, "e")
-# r_narrow.connectRooms(r_foyer, "w")
-
-# r_narrow.connectRooms(r_treasure, "n")
-# r_treasure.connectRooms(r_narrow, "s")
 
 players=Player.objects.all()
 for p in players:
