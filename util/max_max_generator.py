@@ -191,9 +191,9 @@ class World:
         print(str)
 
 #Create Script
-width = 5
-height = 5
-num_rooms = 25
+width = 25
+height = 25
+num_rooms = 500
 w = World()
 w.generate_rooms(width, height, num_rooms)
-w.print_rooms()
+# w.print_rooms()

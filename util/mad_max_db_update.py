@@ -16,7 +16,7 @@ while len(stack)>0:
   new_curm=Room(title=curm.name, description=f'{curm.description} No:{curm.id}')
   new_curm.save()
   if prevrm==None:
-    first_room=curm
+    first_room=new_curm.id
   if curm.n_to:
     if prev !='n':
       stack.append((curm.n_to,'s',new_curm))
@@ -53,6 +53,4 @@ players=Player.objects.all()
 for p in players:
   p.currentRoom=first_room
   p.save()
-
-
 
