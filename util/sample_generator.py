@@ -18,9 +18,16 @@ class Room:
         self.x = x
         self.y = y
     def __repr__(self):
+        retval= f"({self.x}, {self.y})\n\t"
+        if self.n_to is not None:
+             retval+=f"N({self.n_to.x},{self.n_to.y}) "
         if self.e_to is not None:
-            return f"({self.x}, {self.y}) -> ({self.e_to.x}, {self.e_to.y})"
-        return f"({self.x}, {self.y})"
+             retval+=f"E({self.e_to.x},{self.e_to.y}) "
+        if self.s_to is not None:
+             retval+=f"S({self.s_to.x},{self.s_to.y}) "
+        if self.w_to is not None:
+             retval+=f"W({self.w_to.x},{self.w_to.y}) "
+        return retval+'\n'
     def connect_rooms(self, connecting_room, direction):
         '''
         Connect two rooms in the given n/s/e/w direction

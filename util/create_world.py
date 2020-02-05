@@ -5,7 +5,7 @@ from adventure.models import Player, Room
 Room.objects.all().delete()
 
 r_outside = Room(title="Outside Cave Entrance",
-                 description="North of you, the cave mount beckons")
+               description="North of you, the cave mount beckons")
 
 r_foyer = Room(title="Foyer", description="""Dim light filters in from the south. Dusty
 passages run north and east.""")
@@ -22,6 +22,9 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south.""")
 
 r_outside.save()
+r_outside.description="BLAH"
+r_outside.save()
+
 r_foyer.save()
 r_overlook.save()
 r_narrow.save()
