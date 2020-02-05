@@ -1,3 +1,42 @@
+import random
+
+class Room:
+    def __init__(self, id, name, description, x, y):
+        self.id = id
+        self.name = name
+        self.description = description
+        self.n_to = None
+        self.s_to = None
+        self.e_to = None
+        self.w_to = None
+        self.x = x
+        self.y = y
+    def __repr__(self):
+        retval= f"({self.x}, {self.y})\n\t"
+        if self.n_to is not None:
+             retval+=f"N({self.n_to.x},{self.n_to.y}) "
+        if self.e_to is not None:
+             retval+=f"E({self.e_to.x},{self.e_to.y}) "
+        if self.s_to is not None:
+             retval+=f"S({self.s_to.x},{self.s_to.y}) "
+        if self.w_to is not None:
+             retval+=f"W({self.w_to.x},{self.w_to.y}) "
+        return retval+'\n'
+    def connect_rooms(self, connecting_room, direction):
+        '''
+        Connect two rooms in the given n/s/e/w direction
+        '''
+        reverse_dirs = {"n": "s", "s": "n", "e": "w", "w": "e"}
+        reverse_dir = reverse_dirs[direction]
+        setattr(self, f"{direction}_to", connecting_room)
+        setattr(connecting_room, f"{reverse_dir}_to", self)
+    def get_room_in_direction(self, direction):
+        '''
+        Connect two rooms in the given n/s/e/w direction
+        '''
+        return getattr(self, f"{direction}_to")
+
+
 class World:
     def __init__(self):
         self.grid = None
@@ -47,7 +86,7 @@ class World:
                     available_dir=get_dirs(x,y)
                     last_split+=1
                     direction=-1
-                    print("SPLIT",previous_room,available_dir)
+                    # print("SPLIT",previous_room,available_dir)
                 # print("RMLST",room_list)
                 # if available_dir==[]:
                 #     break
@@ -152,10 +191,9 @@ class World:
         print(str)
 
 #Create Script
-width = 25
-height = 25
-num_rooms = 500
+width = 5
+height = 5
+num_rooms = 25
 w = World()
 w.generate_rooms(width, height, num_rooms)
 w.print_rooms()
-# print(f"\n\nWorld\n  height: {height}\n  width: {width},\n  num_rooms: {num_rooms}\n")
