@@ -86,12 +86,7 @@ class World:
                     available_dir=get_dirs(x,y)
                     last_split+=1
                     direction=-1
-                    # print("SPLIT",previous_room,available_dir)
-                # print("RMLST",room_list)
-                # if available_dir==[]:
-                #     break
                 new_direction=random.randint(0, 3)
-                    # print("New Dir",new_direction)
                 while new_direction not in available_dir:
                     if new_direction==0:
                         new_direction=(new_direction+2)%4
@@ -102,7 +97,6 @@ class World:
                     elif new_direction==3:
                         new_direction=(new_direction+2)%4
                     new_direction=random.randint(0, 3)
-                # print("RAND",new_direction)
                 if direction in vertical and new_direction in vertical:
                     pass
                 elif  direction in horizontal and new_direction in horizontal:
@@ -131,10 +125,8 @@ class World:
             # Save the room in the World grid
             self.grid[y][x] = room
             # Connect the new room to the previous room
-            # print("ROOM",previous_room,room,room_direction)
             if previous_room is not None:
                 previous_room.connect_rooms(room, room_direction)
-            # print("WTF",previous_room,"ROOM",room,room_direction)
             room_list.append(room)
             previous_room = room
             # Update iteration variables
@@ -148,7 +140,6 @@ class World:
         str = "# " * ((3 + self.width * 5) // 2) + "\n"
         # The console prints top to bottom but our array is arranged
         # bottom to top.
-        #
         # We reverse it so it draws in the right direction.
         reverse_grid = list(self.grid)  # make a copy of the list
         reverse_grid.reverse()
