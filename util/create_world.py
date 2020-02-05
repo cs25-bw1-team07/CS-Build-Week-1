@@ -22,6 +22,9 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south.""")
 
 r_outside.save()
+r_outside.description="BLAH"
+r_outside.save()
+
 r_foyer.save()
 r_overlook.save()
 r_narrow.save()
