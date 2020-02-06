@@ -9,6 +9,6 @@ class RoomView(APIView):
     # Get all the rooms in the DB
     def get(self, request, *agrs, **kwargs):
 
-        rooms = Room.objects.all()
+        rooms = Room.objects.all().order_by("id")
         room_serializer = RoomSerializer(rooms, many=True)
         return Response(room_serializer.data)
